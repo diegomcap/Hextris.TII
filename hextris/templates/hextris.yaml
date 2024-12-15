@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hextris-deployment
+  labels:
+    app: hextris
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hextris
+  template:
+    metadata:
+      labels:
+        app: hextris
+    spec:
+      containers:
+        - name: hextris-app
+          image: {{ .Values.deployment.image }}:{{ .Values.deployment.tag }}
+          imagePullPolicy: {{.Values.deployment.imagePullPolicy}}
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"
+          ports:
+            - containerPort: 80
